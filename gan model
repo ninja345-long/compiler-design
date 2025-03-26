@@ -1,0 +1,18 @@
+import tensorflow as tf
+from tensorflow.keras import layers
+
+def build_generator(filters, activation):
+    model = tf.keras.Sequential([
+        layers.Conv2D(filters, (3, 3), activation=activation, padding='same', input_shape=(128, 128, 3)),
+        layers.Conv2D(filters // 2, (3, 3), activation=activation, padding='same'),
+        layers.Conv2D(3, (3, 3), activation='tanh', padding='same')
+    ])
+    return model
+def build_discriminator(filters, activation):
+    model = tf.keras.Sequential([
+        layers.Conv2D(filters, (3, 3), activation=activation, input_shape=(128, 128, 3)),
+        layers.Conv2D(filters * 2, (3, 3), activation=activation),
+        layers.Flatten(),
+        layers.Dense(1, activation="sigmoid")
+    ])
+    return model
